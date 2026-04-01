@@ -10,9 +10,9 @@ export default function Home() {
     <div className="min-h-screen bg-linear-to-br from-gray-100 via-gray-100 to-green-300">
       <Navbar />
 
-      <main className="container m-auto pt-10">
-        <section className="flex gap-50 mt-25 mx-50">
-          <div className="max-w-150">
+      <main className="container m-auto pt-10 overflow-x-hidden min-h-screen">
+        <section className="flex gap-50 mt-25 mx-50 max-xl:mx-4 max-xl:gap-20 max-[769px]:flex-col max-[769px]:items-center max-[769px]:mx-0">
+          <div className="max-w-150 max-[769px]:max-w-none">
             <h1 className="text-5xl font-semibold text-gray-800 leading-14">Capture, organize, and tackle your to-dos from anywhere.</h1>
             <p className="text-gray-600 mt-3 text-2xl leading-8">
               Escape the clutter and chaos—unleash your productivity with <span className="font-semibold text-green-700 pb-[2px] border-b-3 border-green-700">Boardly</span>.
@@ -35,8 +35,8 @@ export default function Home() {
               </SignedOut>
             </div>
           </div>
-          <div className="relative w-50 h-100">
-            <Image src="/iphone_14-pro-max.jpg" alt="Mobile Website" width={200} height={400} className="rounded-[32px] absolute z-2" />
+          <div className="relative min-w-50 min-h-100">
+            <Image src="/iphone_14-pro-max.jpg" alt="Mobile Website" width={200} height={400} className="rounded-[32px] absolute z-2 w-full h-full" />
             <div className="absolute w-25 h-25 bg-green-400 rounded-full -top-[15%] -right-[20%] z-1" />
             <div className="absolute w-25 h-25 bg-green-500 -bottom-[13%] -left-[20%] z-1" />
             <div className="w-0 h-0 border-l-80 border-l-transparent border-r-80 border-r-transparent border-b-80 border-b-green-600 absolute z-2 -bottom-[10%] -right-[32%] rotate-135" />
