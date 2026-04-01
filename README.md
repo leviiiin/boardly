@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="/assets/Logo.png" />
+  <img src="/Logo.png" />
 
   <h1 align="center">Boardly — Project Management Tool</h1>
 </div>
