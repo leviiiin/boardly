@@ -1,11 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-'use client';
+"use client";
 
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { CheckCheck, Trash } from "lucide-react";
+import { Check, Trash2, Search, Calendar, BarChart2 } from "lucide-react";
 
 interface BoardFiltersDialogProps {
   open: boolean;
@@ -24,64 +31,87 @@ export default function BoardFiltersDialog({
 }: BoardFiltersDialogProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[95vw] max-w-[425px] mx-auto">
-        <DialogHeader>
+      <DialogContent className="w-[95vw] max-w-md mx-auto rounded-xl p-5 gap-0">
+        <DialogHeader className="pb-4 border-b border-border/40">
           <DialogTitle>Filter Boards</DialogTitle>
-          <p className="text-sm text-gray-600">
+          <DialogDescription>
             Filter boards by title, date, or task count.
-          </p>
+          </DialogDescription>
         </DialogHeader>
 
-        <div className="space-y-6 pt-2">
-          {/* Search */}
+        <div className="space-y-5 py-4">
           <div className="space-y-2">
-            <Label>Search</Label>
+            <Label className="inline-flex items-center gap-1.5 text-muted-foreground/90">
+              <Search className="h-3.5 w-3.5 opacity-60" />
+              Search
+            </Label>
             <Input
               placeholder="Search board titles..."
               value={filters.search}
-              onChange={(e) => onFiltersChange({ ...filters, search: e.target.value })}
+              onChange={(e) =>
+                onFiltersChange({ ...filters, search: e.target.value })
+              }
+              className="h-9.5 rounded-lg"
             />
           </div>
 
-          {/* Date Range */}
           <div className="space-y-2">
-            <Label>Date Range</Label>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div>
-                <Label className="text-xs">Start Date</Label>
+            <Label className="inline-flex items-center gap-1.5 text-muted-foreground/90">
+              <Calendar className="h-3.5 w-3.5 opacity-60" />
+              Date Range
+            </Label>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-1">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground/60 block">
+                  Start Date
+                </span>
                 <Input
                   type="date"
                   value={filters.dateRange.start || ""}
                   onChange={(e) =>
                     onFiltersChange({
                       ...filters,
-                      dateRange: { ...filters.dateRange, start: e.target.value || null },
+                      dateRange: {
+                        ...filters.dateRange,
+                        start: e.target.value || null,
+                      },
                     })
                   }
+                  className="h-9 text-xs cursor-pointer rounded-lg"
                 />
               </div>
-              <div>
-                <Label className="text-xs">End Date</Label>
+              <div className="space-y-1">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground/60 block">
+                  End Date
+                </span>
                 <Input
                   type="date"
                   value={filters.dateRange.end || ""}
                   onChange={(e) =>
                     onFiltersChange({
                       ...filters,
-                      dateRange: { ...filters.dateRange, end: e.target.value || null },
+                      dateRange: {
+                        ...filters.dateRange,
+                        end: e.target.value || null,
+                      },
                     })
                   }
+                  className="h-9 text-xs cursor-pointer rounded-lg"
                 />
               </div>
             </div>
           </div>
 
-          {/* Task Count */}
           <div className="space-y-2">
-            <Label>Task Count</Label>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div>
-                <Label className="text-xs">Minimum</Label>
+            <Label className="inline-flex items-center gap-1.5 text-muted-foreground/90">
+              <BarChart2 className="h-3.5 w-3.5 opacity-60" />
+              Task Count
+            </Label>
+            <div className="grid grid-cols-2 gap-3">
+              <div className="space-y-1">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground/60 block">
+                  Minimum
+                </span>
                 <Input
                   type="number"
                   min="0"
@@ -96,10 +126,13 @@ export default function BoardFiltersDialog({
                       },
                     })
                   }
+                  className="h-9 rounded-lg"
                 />
               </div>
-              <div>
-                <Label className="text-xs">Maximum</Label>
+              <div className="space-y-1">
+                <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground/60 block">
+                  Maximum
+                </span>
                 <Input
                   type="number"
                   min="0"
@@ -114,22 +147,32 @@ export default function BoardFiltersDialog({
                       },
                     })
                   }
+                  className="h-9 rounded-lg"
                 />
               </div>
             </div>
           </div>
-
-          <div className="flex flex-col sm:flex-row gap-3 pt-4">
-            <Button variant="outline" className="flex-1" onClick={onClear}>
-              <Trash className="mr-2" />
-              Clear Filters
-            </Button>
-            <Button className="flex-1" onClick={() => onOpenChange(false)}>
-              <CheckCheck className="mr-2" />
-              Apply Filters
-            </Button>
-          </div>
         </div>
+
+        <DialogFooter className="pt-3 border-t border-border/40 gap-2 sm:gap-0">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={onClear}
+            className="h-9 text-muted-foreground hover:text-destructive hover:bg-destructive/10 font-medium rounded-lg"
+          >
+            <Trash2 className="h-4 w-4" />
+            Clear Filters
+          </Button>
+          <Button
+            size="sm"
+            onClick={() => onOpenChange(false)}
+            className="h-9 font-semibold"
+          >
+            <Check className="h-4 w-4" />
+            Apply Filters
+          </Button>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

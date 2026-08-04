@@ -2,51 +2,70 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Task } from "@/supabase/models";
-import { CalendarDays, User } from "lucide-react";
+import { CalendarDays, User, GripVertical } from "lucide-react";
 
-function getPriorityColor(priority: "low" | "medium" | "high"): string {
+function getPriorityStyle(priority: "low" | "medium" | "high"): string {
   switch (priority) {
-    case "high": return "bg-red-500";
-    case "medium": return "bg-amber-500";
-    case "low": return "bg-lime-500";
-    default: return "bg-amber-500";
+    case "high":
+      return "bg-destructive/10 text-destructive dark:bg-destructive/20";
+    case "medium":
+      return "bg-amber-500/10 text-amber-600 dark:text-amber-400";
+    case "low":
+      return "bg-emerald-500/10 text-emerald-600 dark:text-emerald-400";
+    default:
+      return "bg-amber-500/10 text-amber-600 dark:text-amber-400";
   }
 }
 
 export default function TaskOverlay({ task }: { task: Task }) {
   return (
-    <Card className="cursor-pointer border-2 hover:border-gray-300 hover:shadow-md transition-all duration-300">
-      <CardContent className="p-3 sm:p-4">
-        <div>
-          <div className="flex items-start justify-between mb-3">
-            <h4 className="font-medium text-gray-800 text-sm leading-tight flex-1 min-w-0 pr-2">
+    <div className="z-100 pointer-events-none select-none w-full max-w-[calc(100%-8px)] mx-auto">
+      <Card className="border-primary/40 bg-accent/40 rotate-[2deg] scale-[1.02] shadow-2xl backdrop-blur-sm">
+        <CardContent className="p-3.5 flex flex-col gap-2">
+          <div className="flex items-start justify-between gap-2">
+            <h4 className="font-semibold text-foreground text-sm tracking-tight leading-snug flex-1 min-w-0">
               {task.title}
             </h4>
+            <div className="h-5 w-5 rounded-md flex items-center justify-center text-muted-foreground/70 shrink-0">
+              <GripVertical className="h-3.5 w-3.5" />
+            </div>
           </div>
 
-          <p className="text-xs text-gray-600 line-clamp-2 mb-1">
-            {task.description || "No description."}
-          </p>
+          {task.description && (
+            <p className="text-xs font-medium text-muted-foreground/90 line-clamp-2 leading-relaxed">
+              {task.description}
+            </p>
+          )}
 
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-1 sm:space-x-2 min-w-0">
+          <div className="pt-2 border-t border-border/40 flex items-center justify-between gap-3 mt-1">
+            <div className="flex items-center gap-2 min-w-0 text-[11px] font-medium text-muted-foreground/70">
               {task.assignee && (
-                <div className="flex items-center space-x-1 text-xs text-gray-500">
-                  <User className="h-3 w-3" />
+                <div className="flex items-center gap-1 min-w-0 bg-muted/60 px-1.5 py-0.5 rounded-sm">
+                  <User className="h-3 w-3 opacity-60 shrink-0" />
                   <span className="truncate">{task.assignee}</span>
                 </div>
               )}
               {task.due_date && (
-                <div className="flex items-center space-x-1 text-xs text-gray-500">
-                  <CalendarDays className="h-3 w-3" />
-                  <span className="truncate">{task.due_date}</span>
+                <div className="flex items-center gap-1 min-w-0">
+                  <CalendarDays className="h-3 w-3 opacity-60 shrink-0" />
+                  <span className="truncate">
+                    {new Date(task.due_date).toLocaleDateString(undefined, {
+                      month: "short",
+                      day: "numeric",
+                    })}
+                  </span>
                 </div>
               )}
             </div>
-            <div className={`w-2 h-2 rounded-full ${getPriorityColor(task.priority)}`} />
+
+            <div
+              className={`px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider border border-transparent/10 shrink-0 ${getPriorityStyle(task.priority)}`}
+            >
+              {task.priority || "medium"}
+            </div>
           </div>
-        </div>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </div>
   );
 }

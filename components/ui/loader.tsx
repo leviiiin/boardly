@@ -1,16 +1,24 @@
-import { Loader2Icon } from "lucide-react"
+import { Loader2Icon } from "lucide-react";
 
-import { cn } from "@/utils/utils"
+import { cn } from "@/utils/utils";
 
 function Loader({ className, ...props }: React.ComponentProps<"svg">) {
   return (
-    <Loader2Icon
-      role="status"
-      aria-label="Loading"
-      className={cn("animate-spin text-green-600 size-16 absolute top-[50%] left-[50%] translate-[-50%]", className)}
-      {...props}
-    />
-  )
+    <div className="absolute inset-0 flex items-center justify-center bg-background/20 backdrop-blur-[2px]">
+      <div className="relative">
+        <Loader2Icon
+          role="status"
+          aria-label="Loading"
+          className={cn(
+            "animate-spin text-primary size-8 stroke-[2.5]",
+            className,
+          )}
+          {...props}
+        />
+        <div className="absolute inset-0 animate-ping rounded-full bg-primary/20 size-8" />
+      </div>
+    </div>
+  );
 }
 
-export { Loader }
+export { Loader };

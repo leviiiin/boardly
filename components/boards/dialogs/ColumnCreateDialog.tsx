@@ -1,10 +1,17 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { CheckCheck } from "lucide-react";
+import { Check, FolderPlus } from "lucide-react";
 
 interface ColumnCreateDialogProps {
   open: boolean;
@@ -23,28 +30,47 @@ export default function ColumnCreateDialog({
 }: ColumnCreateDialogProps) {
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="w-[95vw] max-w-[430px] mx-auto">
-        <DialogHeader>
+      <DialogContent className="w-[95vw] max-w-md mx-auto rounded-xl p-5 gap-0">
+        <DialogHeader className="pb-4 border-b border-border/40">
           <DialogTitle>Create New Column</DialogTitle>
+          <DialogDescription>
+            Add a new column stage to structuralize your kanban workflow canvas.
+          </DialogDescription>
         </DialogHeader>
-        <form onSubmit={onSubmit} className="mt-4 space-y-4">
-          <div>
-            <Label>Column Title</Label>
+
+        <form onSubmit={onSubmit} className="space-y-5 py-4">
+          <div className="space-y-1.5">
+            <Label className="inline-flex items-center gap-1.5 text-foreground/90">
+              <FolderPlus className="h-3.5 w-3.5 opacity-60" />
+              Column Title
+            </Label>
             <Input
               value={title}
               onChange={(e) => onTitleChange(e.target.value)}
-              placeholder="Enter column title..."
+              placeholder="Enter column title (e.g., Q&A Testing)..."
               required
+              className="h-9.5 rounded-lg"
             />
           </div>
-          <div className="flex gap-3 justify-end">
-            <Button type="button" variant="outline" onClick={() => onOpenChange(false)}>
+
+          <DialogFooter className="pt-3 border-t border-border/40 gap-2 sm:gap-0">
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              className="h-9 font-medium"
+              onClick={() => onOpenChange(false)}
+            >
               Cancel
             </Button>
-            <Button type="submit">
-              <CheckCheck className="mr-2" /> Create
+            <Button
+              type="submit"
+              size="sm"
+              className="h-9 font-semibold px-4 shadow-sm shadow-primary/10"
+            >
+              <Check className="h-4 w-4" /> Create Stage
             </Button>
-          </div>
+          </DialogFooter>
         </form>
       </DialogContent>
     </Dialog>
